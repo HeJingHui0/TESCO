@@ -7,6 +7,7 @@
         wx:for = "{{goodsList}}"
         wx:key = "goods_id"
         wx:if = "{{item.goods_small_logo}}"
+        url = "/pages/goods_detail/index?goods_id={{item.goods_id}}"
         >
           <view class="goods_img">
             <image mode="widthFix" src="{{item.goods_small_logo}}"></image>
