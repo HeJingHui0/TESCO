@@ -1,18 +1,45 @@
-// pages/auth/index.js
+import { request } from "../../request/index.js"
+import regeneratorRuntime from "../../lib/runtime/runtime"
+import {login, showToast} from "../../utils/asyncWX"
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
 
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
 
+  },
+  async getUserInfo(e) {
+    // 个人账号无法获取支付权限,这里将isTrue设置为false
+    const isTrue = false
+    try {
+      const {encryptedData, iv, rawData, signature} = e.detail
+      const {code} = await login()
+      const loginParams = {
+        encryptedData,
+        iv,
+        rawData,
+        signature,
+        code
+      }
+      if(isTrue) {
+        const {token} = await request({
+          url: '/users/wxlogin',
+          method: 'post',
+          data: loginParams
+        })
+        wx.setStorageSync('token', token)
+        wx.navigateBack({
+          delta: 1,
+        })
+      }else {
+        wx.navigateBack({
+          delta: 1,
+        })
+        await showToast({title: '个人账号无支付权限'})
+      }
+    } catch (error) {
+      
+    }
   },
 
   /**
