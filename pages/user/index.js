@@ -9,6 +9,12 @@ Page({
       userInfo
     })
   },
+  handleRefund() {
+    wx.showToast({
+      title: '暂不支持退款',
+      icon: 'none'
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
