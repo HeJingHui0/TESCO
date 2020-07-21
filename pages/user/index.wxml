@@ -17,8 +17,8 @@
         <view class="history_num">0</view>
         <view class="history_name">收藏店铺</view>
       </navigator>
-      <navigator>
-        <view class="history_num">0</view>
+      <navigator url="/pages/collect/index">
+        <view class="history_num">{{collectNums}}</view>
         <view class="history_name">收藏商品</view>
       </navigator>
       <navigator>

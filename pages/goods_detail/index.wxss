@@ -41,6 +41,9 @@ page {
 .goods_info .goods_collect .collect_text {
   font-size: 24rpx;
 }
+.goods_info .goods_collect .icon-shoucang1 {
+  color: red;
+}
 .goods_detail .goods_detail_title {
   font-size: 30rpx;
   font-weight: 600;

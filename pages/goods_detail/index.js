@@ -2,23 +2,29 @@ import { request } from "../../request/index.js"
 import regeneratorRuntime from "../../lib/runtime/runtime"
 Page({
   data: {
-    goodsDetail: {}
+    goodsDetail: {},
+    isCollect: ''
   },
   goodsImage: {},
-  onLoad: function (options) {
+  onShow() {
+    let pages = getCurrentPages()
+    let options = pages[pages.length -1].options
     const {goods_id} = options
     this.getGoodsDetail(goods_id)
   },
   async getGoodsDetail(goods_id) {
     const result = await request({url: '/goods/detail', data: {goods_id}})
     this.goodsImage = result
+    let collect = wx.getStorageSync('collect') || []
+    let isCollect = collect.some(item => item.goods_id === this.goodsImage.goods_id)
     this.setData({
       goodsDetail: {
         goods_name: result.goods_name,
         goods_price: result.goods_price,
         goods_introduce: result.goods_introduce.replace(/\.webp/g, '.jpg'),
         pics: result.pics
-      }
+      },
+      isCollect
     })
   },
   handlePrevewImage(e) {
@@ -46,20 +52,38 @@ Page({
       mask: true
     })
   },
+  handleCollect() {
+    let isCollect = false
+    let collect = wx.getStorageSync('collect') || []
+    let index = collect.findIndex(item => item.goods_id === this.goodsImage.goods_id)
+    if(index !== -1) {
+      collect.splice(index, 1)
+      isCollect = false
+      wx.showToast({
+        title: '取消收藏',
+        icon: 'success',
+        mask: true
+      })
+    }else {
+      collect.push(this.goodsImage)
+      isCollect = true
+      wx.showToast({
+        title: '收藏成功',
+        icon: 'success',
+        mask: true
+      })
+    }
+    wx.setStorageSync('collect', collect)
+    this.setData({
+      isCollect
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
   /**
    * 生命周期函数--监听页面隐藏
    */
