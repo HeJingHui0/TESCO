@@ -1,18 +1,44 @@
-// pages/search/index.js
+import { request } from "../../request/index.js"
+import regeneratorRuntime from "../../lib/runtime/runtime"
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    searchList: [],
+    isBtnShow: false,
+    inputValue: ''
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  timeId: -1,
+  handleInput(e) {
+    const {value} = e.detail
+    if(!value.trim()) {
+      this.setData({
+        searchList: [],
+        isBtnShow: false
+      })
+      return
+    }
+    this.setData({
+      isBtnShow: true
+    })
+    clearTimeout(this.timeId)
+    this.timeId = setTimeout(() => {
+      this.getSearchList(value)
+    }, 1000);
+  },
+  async getSearchList(query) {
+    const searchList = await request({
+      url: '/goods/qsearch',
+      data: {query}
+    })
+    this.setData({
+      searchList
+    })
+  },
+  handleCancel() {
+    this.setData({
+      searchList: [],
+      isBtnShow: false,
+      inputValue: ''
+    })
   },
 
   /**
