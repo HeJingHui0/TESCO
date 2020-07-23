@@ -29,7 +29,8 @@ Page({
   },
   totalPages: 1,
   onLoad: function (options) {
-    this.queryParams.cid = options.cid;
+    this.queryParams.cid = options.cid || '';
+    this.queryParams.query = options.query || '';
     this.getGoodsList()
   },
   async getGoodsList() {

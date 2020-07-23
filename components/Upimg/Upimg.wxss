@@ -1,0 +1,15 @@
+.upimg_wrap {
+  width: 60rpx;
+  height: 60rpx;
+  position: relative;
+}
+.upimg_wrap image {
+  width: 100%;
+  height: 100%;
+  border-radius: 10rpx;
+}
+.upimg_wrap .upimg_icon {
+  position: absolute;
+  top: -15rpx;
+  right: -20rpx;
+}

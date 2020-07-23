@@ -1,0 +1,4 @@
+<view class="upimg_wrap">
+  <image src="{{src}}"></image>
+  <icon type="clear" color="red" size="16" class="upimg_icon"></icon>
+</view>
